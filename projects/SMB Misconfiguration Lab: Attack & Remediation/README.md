@@ -16,7 +16,7 @@ The goal was not only to exploit the misconfiguration, but also to **apply defen
 
 ---
 
-## Attack Phase (Full command list in [commands.md])
+## Attack Phase (Full command list in [commands.md](commands.md))
 - **Nmap Port Scan:** Used nmap to scan ports 0-500 to confirm smb was avaliable to exploit.
 - **SMB Brute Force:** Used `smb_login` module in Metasploit to discover weak credentials.
 - **NTLM Hash Dump:** Used `psexec` exploit to gain a Meterpreter shell.
