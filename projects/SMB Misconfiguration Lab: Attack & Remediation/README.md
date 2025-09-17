@@ -1,5 +1,7 @@
 # SMB Misconfiguration Lab: Attack & Remediation
+### TL;DR: Weak SMB settings + short passwords = quick compromise. By enforcing ≥12-character policies, lockouts, and restricting SMB to domain networks, brute-force and hash cracking attacks became impractical.
 
+### Ethics / Scope: This lab was performed in an isolated, self-hosted environment under my control. No real systems or networks were targeted.
 ## Overview
 This lab demonstrates how weak SMB configurations and poor password policies can be exploited, and how proper remediation makes brute force infeasible.  
 The goal was not only to exploit the misconfiguration, but also to **apply defensive measures** (password policy, lockout policy, firewall rules) to harden the system.
@@ -7,24 +9,26 @@ The goal was not only to exploit the misconfiguration, but also to **apply defen
 ---
 
 ## Lab Setup
-- **Platform:** Hyper-V  
-- **Attacker VM:** Kali Linux  
-- **Target VM:** Windows Server 2022 (Domain Controller)  
-- **Services:** SMB (port 445), Active Directory  
+- **Platform:** Hyper-V on Windows 11 Host 
+- **Attacker VM:** Kali Purple Linux 2025.2 - Static IP Used: 192.168.56.11 
+- **Target VM:** Windows Server 2022 (Domain Controller) - Static IP Used 192.168.56.11 
+- **Services:** SMB (port TCP 445), Windows Server Active Directory  
 
 ---
 
-## Attack Phase
-- **SMB Brute Force:** Used `smb_login` module in Metasploit to discover weak credentials.  
-- **NTLM Hash Dump:** Used `psexec` exploit to gain a Meterpreter shell and dump NTLM hashes.  
+## Attack Phase (Full command list in [commands.md])
+- **Nmap Port Scan:** Used nmap to scan ports 0-500 to confirm smb was avaliable to exploit.
+- **SMB Brute Force:** Used `smb_login` module in Metasploit to discover weak credentials.
+- **NTLM Hash Dump:** Used `psexec` exploit to gain a Meterpreter shell.
+- **Hashdump:** Extracted NTLM hashes for offline cracking.
 - **Hash Cracking:** Leveraged Hashcat to crack NTLM hashes using:
-  - Dictionary (`rockyou.txt`) + mask ('?d?d?d') hybrif attack
+  - Dictionary (`rockyou.txt`) + mask ('?d?d?d') hybrid attack
 
 **Key Finding:** Passwords like `Abcdef123` that are common human patterns were easily cracked in seconds.
 
 ---
 
-## Defense Phase
+## Defense Phase (Full powershell and GPO changes in [remediation.md])
 - **Password Policy:** Enforced 12+ character minimum, complexity enabled.  
 - **Account Lockout:** Configured lockout threshold and duration to prevent repeated brute force attempts.  
 - **Firewall Hardening:** Restricted SMB access to domain-only profile, disabling public exposure.  
@@ -43,7 +47,7 @@ When retesting, brute force attempts were blocked by lockout policy, and 12+ cha
 
 ## Screenshots
 📷 Include:
-- Successful nmap port scan (0-500) to confirm port 445 was open and available
+- Successful nmap port scan (0-500) to confirm port 445 was open and available 
 - Successful brute force (Metasploit)
 - SMBClient listing share + file upload to prove read/write access
 - SMB Psexec exploit result (Metasploit
