@@ -45,7 +45,7 @@ When retesting, brute force attempts were blocked by lockout policy, and 12+ cha
 
 ---
 
-## Screenshots
+## Screenshots Find here [screenshots.md](screenshots.md) 
 📷 Include:
 - Successful nmap port scan (0-500) to confirm port 445 was open and available 
 - Successful brute force (Metasploit)
