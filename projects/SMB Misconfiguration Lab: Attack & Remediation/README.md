@@ -28,7 +28,7 @@ The goal was not only to exploit the misconfiguration, but also to **apply defen
 
 ---
 
-## Defense Phase (Full powershell and GPO changes in [remediation.md](remidiation.md))
+## Defense Phase (Full powershell and GPO changes in [remediation.md](remediation.md))
 - **Password Policy:** Enforced 12+ character minimum, complexity enabled.  
 - **Account Lockout:** Configured lockout threshold and duration to prevent repeated brute force attempts.  
 - **Firewall Hardening:** Restricted SMB access to domain-only profile, disabling public exposure.  
