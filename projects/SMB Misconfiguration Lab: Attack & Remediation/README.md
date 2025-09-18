@@ -1,4 +1,4 @@
-# SMB Misconfiguration Lab: Attack & Remediation
+# Windows Server Hardening Lab: Attack & Remediation
 ### TL;DR: Weak SMB settings + short passwords = quick compromise. By enforcing ≥12-character policies, lockouts, and restricting SMB to domain networks, brute-force and hash cracking attacks became impractical.
 
 ### Ethics / Scope: This lab was performed in an isolated, self-hosted environment under my control. No real systems or networks were targeted.
